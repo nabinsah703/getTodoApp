@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gettodoapp/model/todo.dart';
 
 class AddTodo extends StatefulWidget {
   const AddTodo({Key? key}) : super(key: key);
@@ -20,10 +21,13 @@ class _AddTodoState extends State<AddTodo> {
           child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 TextFormField(
                   decoration: InputDecoration(
                       hintText: "title",
+                      labelText: "Title",
                       border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(13)),
                       focusColor: Colors.red),
@@ -34,9 +38,13 @@ class _AddTodoState extends State<AddTodo> {
                 TextFormField(
                   decoration: InputDecoration(
                       hintText: "description",
+                      labelText: "Description",
                       border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(13)),
                       focusColor: Colors.red),
+                ),
+                const SizedBox(
+                  height: 20,
                 ),
                 ElevatedButton(
                   onPressed: () {
@@ -47,7 +55,6 @@ class _AddTodoState extends State<AddTodo> {
                     style: TextStyle(
                       backgroundColor: Colors.purple,
                     ),
-
                   ),
                 )
               ],
