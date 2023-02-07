@@ -62,19 +62,18 @@ class _HomeScreenState extends State<HomeScreen> {
             margin:const EdgeInsets.symmetric(horizontal: 10,vertical: 6),
             child: Container(
               decoration:const BoxDecoration(
-                color: Colors.amber,
+                color: Color.fromARGB(255, 225, 220, 220),
               ),
               child: InkWell(
                 onTap: () async {
                   Todo todo = await Navigator.push(context,
                   MaterialPageRoute(builder: (builder)=>
                   TodoView(todo: todos[index],)));
-                   if (todo != null) {
                         setState(() {
                           todos[index] = todo;
                         });
                         saveTodo();
-                      }
+                      
                 },
                 child:makeListTile(todos[index], index) ,
               ),
@@ -85,8 +84,8 @@ class _HomeScreenState extends State<HomeScreen> {
         onPressed: () {
           addTodo();
         },
-        backgroundColor: Colors.black12,
-        child: Icon(Icons.add),
+        backgroundColor: Colors.purple,
+        child:const Icon(Icons.add),
       ),
     );
   }
@@ -96,12 +95,11 @@ class _HomeScreenState extends State<HomeScreen> {
     Todo t = Todo(id: id, title: '', description: '', status: false);
     Todo returnTodo = await Navigator.push(
         context, MaterialPageRoute(builder: (context) => TodoView(todo: t)));
-    if (returnTodo != null) {
       setState(() {
         todos.add(returnTodo);
       });
       saveTodo();
-    }
+    
   }
 
    makeListTile(Todo todo, index) {

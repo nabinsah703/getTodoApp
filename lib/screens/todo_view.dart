@@ -19,74 +19,62 @@ class _TodoViewState extends State<TodoView> {
   @override
   void initState() {
     super.initState();
-    if (todo != null) {
       titleController.text = todo.title!;
       descriptionController.text = todo.description!;
-    }
+    
   }
 
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color.fromRGBO(58, 66, 86, 1.0),
+      backgroundColor: Colors.white,
       appBar: AppBar(
         centerTitle: true,
         elevation: 10,
-        backgroundColor: Color.fromRGBO(58, 66, 86, 1.0),
-        title: Text("Todo View"),
+        backgroundColor: Colors.purple,
+        title: const Text("Add Todo"),
       ),
       body: SingleChildScrollView(
         child: Container(
-          padding: EdgeInsets.all(20),
+          padding:const EdgeInsets.all(20),
           child: Column(
             children: [
-              Container(
-                  child: colorOverride(TextField(
+              TextField(
                 onChanged: (data) {
-                  todo.title = data;
+              todo.title = data;
                 },
-                style: TextStyle(color: Colors.white),
-                decoration: new InputDecoration(
-                  labelStyle: TextStyle(color: Colors.white),
-                  labelText: "Title",
-                  fillColor: Colors.white,
-                  border: new OutlineInputBorder(
-                    borderRadius: new BorderRadius.circular(25.0),
-                    borderSide: new BorderSide(color: Colors.white),
-                  ),
-                  //fillColor: Colors.green
+                decoration:  InputDecoration(
+              labelText: "Title",
+              border:  OutlineInputBorder(
+                borderRadius:  BorderRadius.circular(25.0),
+              ),
                 ),
                 controller: titleController,
-              ))),
-              SizedBox(
+              ),
+             const SizedBox(
                 height: 25,
               ),
-              Container(
-                  child: colorOverride(TextField(
+              TextField(
                 maxLines: 5,
                 onChanged: (data) {
-                  todo.description = data;
+              todo.description = data;
                 },
-                style: TextStyle(color: Colors.white),
-                decoration: new InputDecoration(
-                  labelStyle: TextStyle(color: Colors.white),
-                  labelText: "Description",
-                  fillColor: Colors.white,
-                  border: new OutlineInputBorder(
-                    borderRadius: new BorderRadius.circular(25.0),
-                    borderSide: new BorderSide(color: Colors.white),
-                  ),
-                  //fillColor: Colors.green
+                decoration:  InputDecoration(
+              labelText: "Description",
+              border:  OutlineInputBorder(
+                borderRadius:  BorderRadius.circular(25.0),
+              ),
                 ),
                 controller: descriptionController,
-              ))),
+              )
             ],
           ),
         ),
       ),
-      bottomNavigationBar: Container(
+      bottomNavigationBar: SizedBox(
         height: 55.0,
         child: BottomAppBar(
-          color: Color.fromRGBO(58, 66, 86, 1.0),
+          color: Colors.purple,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: <Widget>[
@@ -95,7 +83,7 @@ class _TodoViewState extends State<TodoView> {
                     showDialog(
                         context: context,
                         builder: (ctx) => AlertDialog(
-                              title: Text("Alert"),
+                              title: const Text("Alert"),
                               content: Text(
                                   "Mark this todo as ${todo.status! ? 'not done' : 'done'}  "),
                               actions: <Widget>[
@@ -103,7 +91,7 @@ class _TodoViewState extends State<TodoView> {
                                   onPressed: () {
                                     Navigator.of(ctx).pop();
                                   },
-                                  child: Text("No"),
+                                  child:const Text("No"),
                                 ),
                                 TextButton(
                                   onPressed: () {
@@ -112,20 +100,20 @@ class _TodoViewState extends State<TodoView> {
                                     });
                                     Navigator.of(ctx).pop();
                                   },
-                                  child: Text("Yes"),
+                                  child:const Text("Yes"),
                                 )
                               ],
                             ));
                   },
                   child: Text(
                     "${todo.status! ? 'Mark as Not Done' : 'Mark as Done'} ",
-                    style: TextStyle(color: Colors.white),
+                    style: const TextStyle(color: Colors.white),
                   )),
-              VerticalDivider(
+              const VerticalDivider(
                 color: Colors.white,
               ),
               IconButton(
-                icon: Icon(Icons.save, color: Colors.white),
+                icon:const Icon(Icons.save, color: Colors.white),
                 onPressed: () {
                   Navigator.pop(context, todo);
                 },
@@ -134,17 +122,6 @@ class _TodoViewState extends State<TodoView> {
           ),
         ),
       ),
-    );
-  }
-
-  Widget colorOverride(Widget child) {
-    return new Theme(
-      data: new ThemeData(
-        primaryColor: Colors.white,
-        accentColor: Colors.white,
-        hintColor: Colors.white,
-      ),
-      child: child,
     );
   }
 }
