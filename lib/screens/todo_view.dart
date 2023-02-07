@@ -19,9 +19,8 @@ class _TodoViewState extends State<TodoView> {
   @override
   void initState() {
     super.initState();
-      titleController.text = todo.title!;
-      descriptionController.text = todo.description!;
-    
+    titleController.text = todo.title!;
+    descriptionController.text = todo.description!;
   }
 
   @override
@@ -36,34 +35,34 @@ class _TodoViewState extends State<TodoView> {
       ),
       body: SingleChildScrollView(
         child: Container(
-          padding:const EdgeInsets.all(20),
+          padding: const EdgeInsets.all(20),
           child: Column(
             children: [
               TextField(
                 onChanged: (data) {
-              todo.title = data;
+                  todo.title = data;
                 },
-                decoration:  InputDecoration(
-              labelText: "Title",
-              border:  OutlineInputBorder(
-                borderRadius:  BorderRadius.circular(25.0),
-              ),
+                decoration: InputDecoration(
+                  labelText: "Title",
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(25.0),
+                  ),
                 ),
                 controller: titleController,
               ),
-             const SizedBox(
+              const SizedBox(
                 height: 25,
               ),
               TextField(
                 maxLines: 5,
                 onChanged: (data) {
-              todo.description = data;
+                  todo.description = data;
                 },
-                decoration:  InputDecoration(
-              labelText: "Description",
-              border:  OutlineInputBorder(
-                borderRadius:  BorderRadius.circular(25.0),
-              ),
+                decoration: InputDecoration(
+                  labelText: "Description",
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(25.0),
+                  ),
                 ),
                 controller: descriptionController,
               )
@@ -84,14 +83,13 @@ class _TodoViewState extends State<TodoView> {
                         context: context,
                         builder: (ctx) => AlertDialog(
                               title: const Text("Alert"),
-                              content: Text(
-                                  "Mark this todo as ${todo.status! ? 'not done' : 'done'}  "),
+                              content: Text("Mark this todo as ${todo.status! ? 'not done' : 'done'}  "),
                               actions: <Widget>[
                                 TextButton(
                                   onPressed: () {
                                     Navigator.of(ctx).pop();
                                   },
-                                  child:const Text("No"),
+                                  child: const Text("No"),
                                 ),
                                 TextButton(
                                   onPressed: () {
@@ -100,7 +98,7 @@ class _TodoViewState extends State<TodoView> {
                                     });
                                     Navigator.of(ctx).pop();
                                   },
-                                  child:const Text("Yes"),
+                                  child: const Text("Yes"),
                                 )
                               ],
                             ));
@@ -113,7 +111,7 @@ class _TodoViewState extends State<TodoView> {
                 color: Colors.white,
               ),
               IconButton(
-                icon:const Icon(Icons.save, color: Colors.white),
+                icon: const Icon(Icons.save, color: Colors.white),
                 onPressed: () {
                   Navigator.pop(context, todo);
                 },

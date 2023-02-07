@@ -1,29 +1,21 @@
 class Todo {
   int? id;
-   String? title;
-   String? description;
+  String? title;
+  String? description;
   bool? status;
 
-  Todo({ this.id,  this.title,  this.description,   this.status}) {
-        id = this.id;
-        title = this.title;
+  Todo({this.id, this.title, this.description, this.status}) {
+    id = this.id;
+    title = this.title;
     description = this.description;
     status = this.status;
-
-      }
-      toJson() {
-    return {
-      "id": id,
-      "description": description,
-      "title": title,
-      "status": status
-    };
   }
+  toJson() {
+    return {"id": id, "description": description, "title": title, "status": status};
+  }
+
   fromJson(jsonData) {
     return Todo(
-        id: jsonData['id'],
-        title: jsonData['title'],
-        description: jsonData['description'],
-        status: jsonData['status']);
+        id: jsonData['id'], title: jsonData['title'], description: jsonData['description'], status: jsonData['status']);
   }
 }
