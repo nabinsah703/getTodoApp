@@ -4,7 +4,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/utils.dart';
 import 'package:gettodoapp/model/google_user.dart';
 import 'package:gettodoapp/screens/forget_password.dart';
 import 'package:gettodoapp/screens/home_screen.dart';
@@ -114,7 +113,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                     ElevatedButton(
                       onPressed: () {
-                      Get.to(()=> SignUpScreen());
+                        Get.to(() => const SignUpScreen());
                       },
                       child: const Text(
                         "Sign Up",
@@ -123,7 +122,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     ElevatedButton(
                       child: const Text("Forget Password"),
                       onPressed: () {
-                        Get.to(() => ForgetPassword());
+                        Get.to(() => const ForgetPassword());
                       },
                     )
                   ],
@@ -144,12 +143,14 @@ class _LoginScreenState extends State<LoginScreen> {
   Future<void> _handleGoogleSignIn() async {
     try {
       GoogleSignInUser.signInWithGoogle(context: context);
-      Navigator.pushAndRemoveUntil(
-          context,
-          MaterialPageRoute(builder: (builder) => _googleUser != null ? const HomeScreen() : const LoginScreen()),
-          (route) => false);
+      Get.to(
+        () => _googleUser != null ? const HomeScreen() : const LoginScreen(),
+      );
     } catch (error) {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(error.toString())));
+      Get.snackbar(
+        "Error",
+        error.toString(),
+      );
     }
   }
 
@@ -190,12 +191,7 @@ class _LoginScreenState extends State<LoginScreen> {
   void login(String email, String password) async {
     try {
       if (await userSign(email, password)) {
-        Navigator.pushAndRemoveUntil(
-            context,
-            MaterialPageRoute(
-              builder: (builder) => const HomeScreen(),
-            ),
-            (route) => false);
+        Get.to(()=>const HomeScreen());
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
             content: Text("Logging successfully"),
