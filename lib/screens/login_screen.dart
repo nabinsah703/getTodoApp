@@ -14,8 +14,11 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  TextEditingController email = TextEditingController();
-  TextEditingController password = TextEditingController();
+
+  var email = "";
+  var password = "";
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
 
   String signInText = "You are not currently signed in.";
   String errorText = "";
@@ -49,13 +52,21 @@ class _LoginScreenState extends State<LoginScreen> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               TextFormField(
-                controller: email,
-                decoration: InputDecoration(errorText: errorText, hintText: "Enter Email ID"),
+                controller: emailController,
+              
+                decoration:  const InputDecoration(label: Text("Email"),border: OutlineInputBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(12))
+                ), hintText: "Enter Email ID"),
               ),
+              const SizedBox(height: 10,),
               TextFormField(
-                controller: password,
+                controller: passwordController,
                 obscureText: true,
-                decoration: InputDecoration(errorText: errorText, hintText: "Enter password ID"),
+                decoration: const InputDecoration(
+                  label: Text("Password"),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(12))
+                  ), hintText: "Please, Enter password"),
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
