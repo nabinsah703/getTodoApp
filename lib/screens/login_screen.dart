@@ -65,7 +65,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   void signInSignUp(User? currentUser) {
     if (currentUser != null) {
-      DocumentReference userRef = fbStore.collection('user').doc(currentUser.uid);
+      DocumentReference userRef = fbStore.collection('users').doc(currentUser.uid);
       userRef.get().then((docSnapShot) {
         if (docSnapShot.exists) {
           Map<String, dynamic>? data = docSnapShot.data() as Map<String, dynamic>?;
