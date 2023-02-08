@@ -118,7 +118,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     ElevatedButton(
                       child: const Text("Forget Password"),
                       onPressed: () {
-                        Get.to(() => const ForgetPassword());
+                        Get.to(() => ForgetPassword());
                       },
                     )
                   ],
