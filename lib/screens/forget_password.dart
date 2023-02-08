@@ -42,7 +42,8 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                 try {
                   await FirebaseAuth.instance.sendPasswordResetEmail(email: email).then((value) => {
                         print("Email sent!!"),
-                        
+                        Get.snackbar("send","Password reset is send successfully",
+                        snackPosition: SnackPosition.BOTTOM),
                         Get.off(
                           () => const LoginScreen(),
                         ),

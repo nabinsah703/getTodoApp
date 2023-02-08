@@ -1,5 +1,3 @@
-// ignore_for_file: avoid_print
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -191,17 +189,17 @@ class _LoginScreenState extends State<LoginScreen> {
   void login(String email, String password) async {
     try {
       if (await userSign(email, password)) {
-        Get.to(()=>const HomeScreen());
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text("Logging successfully"),
-          ),
+        Get.to(() => const HomeScreen());
+        Get.snackbar(
+          "Login",
+          "Logging successfully",
+          snackPosition: SnackPosition.BOTTOM,
         );
       } else {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text("Email Address or Password is wrong"),
-          ),
+        Get.snackbar(
+          "Error",
+          "Email Address or Password is wrong",
+          snackPosition: SnackPosition.BOTTOM,
         );
       }
     } catch (e) {
@@ -218,12 +216,11 @@ class _LoginScreenState extends State<LoginScreen> {
       isResult = true;
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text("No user found for that email."),
-          ),
+        Get.snackbar(
+          "Not found",
+          "No user found for that email.",
+          snackPosition: SnackPosition.BOTTOM,
         );
-        print('No user found for that email.');
       }
     }
     return isResult;

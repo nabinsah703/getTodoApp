@@ -1,7 +1,6 @@
-// ignore_for_file: avoid_print, use_build_context_synchronously
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:gettodoapp/screens/login_screen.dart';
 
 class SignUpScreen extends StatefulWidget {
@@ -38,51 +37,32 @@ class _SignUpScreenState extends State<SignUpScreen> {
         UserCredential userCredential =
             await FirebaseAuth.instance.createUserWithEmailAndPassword(email: email, password: password);
         print(userCredential);
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text(
-              "Registered Successfully. Please Login..",
-            ),
-          ),
+        Get.snackbar(
+          "success",
+          "Registered Successfully. Please Login..",
+          snackPosition: SnackPosition.BOTTOM,
         );
-        Navigator.pushAndRemoveUntil(
-            context,
-            MaterialPageRoute(
-              builder: (builder) => const LoginScreen(),
-            ),
-            (route) => false);
+        Get.to(() => const LoginScreen());
       } on FirebaseAuthException catch (e) {
         if (e.code == 'weak-password') {
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(
-              backgroundColor: Colors.orangeAccent,
-              content: Text(
-                "Password Provided is too Weak",
-                style: TextStyle(fontSize: 18.0, color: Colors.black),
-              ),
-            ),
+          Get.snackbar(
+            "weak password",
+            "Weak Password",
+            snackPosition: SnackPosition.BOTTOM,
           );
         } else if (e.code == 'email-already-in-use') {
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(
-              backgroundColor: Colors.orangeAccent,
-              content: Text(
-                "Account Already exists",
-                style: TextStyle(fontSize: 18.0, color: Colors.black),
-              ),
-            ),
+          Get.snackbar(
+            "Used Email",
+            "Account Already exists",
+            snackPosition: SnackPosition.BOTTOM,
           );
         }
       }
     } else {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          backgroundColor: Colors.orangeAccent,
-          content: Text(
-            "Password and Confirm Password doesn't match",
-            style: TextStyle(fontSize: 16.0, color: Colors.black),
-          ),
-        ),
+      Get.snackbar(
+        "Not Match",
+        "Password and Confirm Password doesn't match",
+        snackPosition: SnackPosition.BOTTOM,
       );
     }
   }
@@ -176,12 +156,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   const Text('If you have Already account? '),
                   InkWell(
                     onTap: () {
-                      Navigator.pushAndRemoveUntil(
-                          context,
-                          MaterialPageRoute(
-                            builder: (builder) => const LoginScreen(),
-                          ),
-                          (route) => false);
+                      Get.to(() => const LoginScreen());
                     },
                     child: const Text(
                       "sign in",
