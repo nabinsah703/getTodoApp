@@ -79,7 +79,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   decoration: const InputDecoration(
                       label: Text("Password"),
                       border: OutlineInputBorder(borderRadius: BorderRadius.all(Radius.circular(12))),
-                      hintText: "Please, Enter password"),
+                      hintText: "Enter password"),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
                       return "Password can't blank";
