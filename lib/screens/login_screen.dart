@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:gettodoapp/model/google_user.dart';
 import 'package:gettodoapp/screens/home_screen.dart';
+import 'package:gettodoapp/screens/sign_up_screen.dart';
 import 'package:gettodoapp/services/google_sign_in_user.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -13,9 +14,14 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  TextEditingController email = TextEditingController();
+  TextEditingController password = TextEditingController();
+
+  String signInText = "You are not currently signed in.";
+  String errorText = "";
+
   FirebaseFirestore fbStore = FirebaseFirestore.instance;
   GoogleUser? _googleUser;
-  String signInText = "You are not currently signed in.";
 
   @override
   void initState() {
@@ -37,15 +43,51 @@ class _LoginScreenState extends State<LoginScreen> {
         centerTitle: true,
       ),
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            ElevatedButton.icon(
-              onPressed: _handleGoogleSignIn,
-              label: const Text("Sign In With Google Account"),
-              icon: const Icon(Icons.arrow_forward_ios_outlined),
-            )
-          ],
+        child: Padding(
+          padding: const EdgeInsets.all(32.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              TextFormField(
+                controller: email,
+                decoration: InputDecoration(errorText: errorText, hintText: "Enter Email ID"),
+              ),
+              TextFormField(
+                controller: password,
+                obscureText: true,
+                decoration: InputDecoration(errorText: errorText, hintText: "Enter password ID"),
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  ElevatedButton(
+                    onPressed: () {},
+                    child: const Text(
+                      "Login",
+                    ),
+                  ),
+                  ElevatedButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (builder) => const SignUpScreen(),
+                        ),
+                      );
+                    },
+                    child: const Text(
+                      "Sign Up",
+                    ),
+                  ),
+                ],
+              ),
+              ElevatedButton.icon(
+                onPressed: _handleGoogleSignIn,
+                label: const Text("Sign In With Google Account"),
+                icon: const Icon(Icons.arrow_forward_ios_outlined),
+              )
+            ],
+          ),
         ),
       ),
     );
