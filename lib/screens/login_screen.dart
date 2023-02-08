@@ -1,7 +1,12 @@
+// ignore_for_file: avoid_print
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/utils.dart';
 import 'package:gettodoapp/model/google_user.dart';
+import 'package:gettodoapp/screens/forget_password.dart';
 import 'package:gettodoapp/screens/home_screen.dart';
 import 'package:gettodoapp/screens/sign_up_screen.dart';
 import 'package:gettodoapp/services/google_sign_in_user.dart';
@@ -38,6 +43,13 @@ class _LoginScreenState extends State<LoginScreen> {
         _googleUser = null;
       }
     });
+  }
+
+  @override
+  void dispose() {
+    emailController.dispose();
+    passwordController.dispose();
+    super.dispose();
   }
 
   @override
@@ -102,17 +114,18 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                     ElevatedButton(
                       onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (builder) => const SignUpScreen(),
-                          ),
-                        );
+                      Get.to(()=> SignUpScreen());
                       },
                       child: const Text(
                         "Sign Up",
                       ),
                     ),
+                    ElevatedButton(
+                      child: const Text("Forget Password"),
+                      onPressed: () {
+                        Get.to(() => ForgetPassword());
+                      },
+                    )
                   ],
                 ),
                 ElevatedButton.icon(
@@ -202,7 +215,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   Future<bool> userSign(String email, String password) async {
     try {
-      final credential = await FirebaseAuth.instance.signInWithEmailAndPassword(
+      await FirebaseAuth.instance.signInWithEmailAndPassword(
         email: email,
         password: password,
       );
