@@ -3,40 +3,28 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:gettodoapp/screens/login_screen.dart';
 
-class SignUpScreen extends StatefulWidget {
-  const SignUpScreen({super.key});
+class SignUpScreen extends StatelessWidget {
+  SignUpScreen({super.key});
 
-  @override
-  State<SignUpScreen> createState() => _SignUpScreenState();
-}
-
-class _SignUpScreenState extends State<SignUpScreen> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   TextEditingController confirmPasswordController = TextEditingController();
-
-  var email = '';
-  var password = '';
-  var confirmPassword = '';
 
   final _signUpKey = GlobalKey<FormState>();
 
   String errorText = "";
 
-  @override
   void dispose() {
     emailController.dispose();
     passwordController.dispose();
     confirmPasswordController.dispose();
-    super.dispose();
   }
 
-  registration() async {
+  registration(String email, String password, String confirmPassword) async {
     if (password == confirmPassword) {
       try {
         UserCredential userCredential =
             await FirebaseAuth.instance.createUserWithEmailAndPassword(email: email, password: password);
-        print(userCredential);
         Get.snackbar(
           "success",
           "Registered Successfully. Please Login..",
@@ -140,12 +128,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
               ElevatedButton(
                 onPressed: () {
                   if (_signUpKey.currentState!.validate()) {
-                    setState(() {
-                      email = emailController.text;
-                      password = passwordController.text;
-                      confirmPassword = confirmPasswordController.text;
-                    });
-                    registration();
+                    registration(emailController.text, passwordController.text, confirmPasswordController.text);
                   }
                 },
                 child: const Text(

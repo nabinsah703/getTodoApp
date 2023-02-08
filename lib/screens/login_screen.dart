@@ -109,7 +109,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                     ElevatedButton(
                       onPressed: () {
-                        Get.to(() => const SignUpScreen());
+                        Get.to(() =>  SignUpScreen());
                       },
                       child: const Text(
                         "Sign Up",
