@@ -14,9 +14,11 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  final _formKey = GlobalKey<FormState>();
 
   var email = "";
   var password = "";
+  bool isResult = false;
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
 
@@ -45,59 +47,81 @@ class _LoginScreenState extends State<LoginScreen> {
         title: const Text("Login"),
         centerTitle: true,
       ),
-      body: Center(
-        child: Padding(
-          padding: const EdgeInsets.all(32.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              TextFormField(
-                controller: emailController,
-              
-                decoration:  const InputDecoration(label: Text("Email"),border: OutlineInputBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(12))
-                ), hintText: "Enter Email ID"),
-              ),
-              const SizedBox(height: 10,),
-              TextFormField(
-                controller: passwordController,
-                obscureText: true,
-                decoration: const InputDecoration(
-                  label: Text("Password"),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(12))
-                  ), hintText: "Please, Enter password"),
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  ElevatedButton(
-                    onPressed: () {},
-                    child: const Text(
-                      "Login",
+      body: Form(
+        key: _formKey,
+        child: Center(
+          child: Padding(
+            padding: const EdgeInsets.all(32.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                TextFormField(
+                  controller: emailController,
+                  decoration: const InputDecoration(
+                      label: Text("Email"),
+                      border: OutlineInputBorder(borderRadius: BorderRadius.all(Radius.circular(12))),
+                      hintText: "Enter Email ID"),
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Enter your Email ID ';
+                    } else if (!value.contains('@')) {
+                      return 'Enter valid Email Address';
+                    }
+                    return null;
+                  },
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                TextFormField(
+                  controller: passwordController,
+                  obscureText: true,
+                  decoration: const InputDecoration(
+                      label: Text("Password"),
+                      border: OutlineInputBorder(borderRadius: BorderRadius.all(Radius.circular(12))),
+                      hintText: "Please, Enter password"),
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return "Password can't blank";
+                    }
+                    return null;
+                  },
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    ElevatedButton(
+                      onPressed: () {
+                        if (_formKey.currentState!.validate()) {
+                          login(emailController.text, passwordController.text);
+                        }
+                      },
+                      child: const Text(
+                        "Login",
+                      ),
                     ),
-                  ),
-                  ElevatedButton(
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (builder) => const SignUpScreen(),
-                        ),
-                      );
-                    },
-                    child: const Text(
-                      "Sign Up",
+                    ElevatedButton(
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (builder) => const SignUpScreen(),
+                          ),
+                        );
+                      },
+                      child: const Text(
+                        "Sign Up",
+                      ),
                     ),
-                  ),
-                ],
-              ),
-              ElevatedButton.icon(
-                onPressed: _handleGoogleSignIn,
-                label: const Text("Sign In With Google Account"),
-                icon: const Icon(Icons.arrow_forward_ios_outlined),
-              )
-            ],
+                  ],
+                ),
+                ElevatedButton.icon(
+                  onPressed: _handleGoogleSignIn,
+                  label: const Text("Sign In With Google Account"),
+                  icon: const Icon(Icons.arrow_forward_ios_outlined),
+                )
+              ],
+            ),
           ),
         ),
       ),
@@ -148,5 +172,51 @@ class _LoginScreenState extends State<LoginScreen> {
         });
       });
     }
+  }
+
+  void login(String email, String password) async {
+    try {
+      if (await userSign(email, password)) {
+        Navigator.pushAndRemoveUntil(
+            context,
+            MaterialPageRoute(
+              builder: (builder) => const HomeScreen(),
+            ),
+            (route) => false);
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text("Logging successfully"),
+          ),
+        );
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text("Email Address or Password is wrong"),
+          ),
+        );
+      }
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  Future<bool> userSign(String email, String password) async {
+    try {
+      final credential = await FirebaseAuth.instance.signInWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
+      isResult = true;
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'user-not-found') {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text("No user found for that email."),
+          ),
+        );
+        print('No user found for that email.');
+      }
+    }
+    return isResult;
   }
 }
