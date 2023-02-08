@@ -98,6 +98,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 height: 12,
               ),
               TextFormField(
+                obscureText: true,
                 controller: passwordController,
                 validator: (value) {
                   if (value == null || value.isEmpty) {
@@ -117,6 +118,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 height: 12,
               ),
               TextFormField(
+                obscureText: true,
                 controller: confirmPasswordController,
                 validator: (value) {
                   if (value == null || value.isEmpty) {
