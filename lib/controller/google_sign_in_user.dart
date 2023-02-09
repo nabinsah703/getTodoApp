@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -18,16 +17,6 @@ class GoogleSignInUser {
         print(error);
       }
     }
-  }
-
-  static enableFirebasePersistance() {
-    FirebaseFirestore.instance.settings = const Settings(
-      persistenceEnabled: true,
-      sslEnabled: true,
-      cacheSizeBytes: Settings.CACHE_SIZE_UNLIMITED,
-    );
-
-    if (kIsWeb) auth.setPersistence(Persistence.LOCAL);
   }
 
   static Future<User?> signInWithGoogle({required BuildContext context}) async {

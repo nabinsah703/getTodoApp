@@ -6,7 +6,7 @@ import 'package:gettodoapp/model/google_user.dart';
 import 'package:gettodoapp/screens/forget_password.dart';
 import 'package:gettodoapp/screens/home_screen.dart';
 import 'package:gettodoapp/screens/sign_up_screen.dart';
-import 'package:gettodoapp/services/google_sign_in_user.dart';
+import 'package:gettodoapp/controller/google_sign_in_user.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
