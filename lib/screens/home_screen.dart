@@ -4,6 +4,7 @@ import 'dart:math';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:gettodoapp/controller/google_sign_in_user.dart';
 import 'package:gettodoapp/screens/login_screen.dart';
 import 'package:gettodoapp/screens/todo_view.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -53,8 +54,8 @@ class _HomeScreenState extends State<HomeScreen> {
         actions: [
           GestureDetector(
               onTap: () {
-                signOut();
-                Get.off(() => const LoginScreen());
+               GoogleSignInUser.signOut();
+                Get.offAll(() => const LoginScreen());
               },
               child: const Icon(Icons.logout))
         ],
@@ -173,13 +174,5 @@ class _HomeScreenState extends State<HomeScreen> {
             ));
   }
 
-  Future<void> signOut() async {
-    GoogleSignIn? googleSignIn = GoogleSignIn();
-    if (googleSignIn.currentUser != null) {
-      await googleSignIn.disconnect();
-      await FirebaseAuth.instance.signOut();
-    } else {
-      await FirebaseAuth.instance.signOut();
-    }
-  }
+  
 }

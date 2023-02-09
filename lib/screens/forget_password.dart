@@ -40,7 +40,7 @@ class ForgetPassword extends StatelessWidget {
                         print("Email sent!!"),
                         Get.snackbar("send","Password reset is send successfully",
                         snackPosition: SnackPosition.BOTTOM),
-                        Get.off(
+                        Get.offAll(
                           () => const LoginScreen(),
                         ),
                       });

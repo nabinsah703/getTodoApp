@@ -141,7 +141,7 @@ class _LoginScreenState extends State<LoginScreen> {
   Future<void> _handleGoogleSignIn() async {
     try {
       GoogleSignInUser.signInWithGoogle(context: context);
-      Get.to(
+      Get.offAll(
         () => _googleUser != null ? const HomeScreen() : const LoginScreen(),
       );
     } catch (error) {
@@ -189,7 +189,7 @@ class _LoginScreenState extends State<LoginScreen> {
   void login(String email, String password) async {
     try {
       if (await userSign(email, password)) {
-        Get.off(() => const HomeScreen());
+        Get.offAll(() => const HomeScreen());
         Get.snackbar(
           "Login",
           "Logging successfully",
