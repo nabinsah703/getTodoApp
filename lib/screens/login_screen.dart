@@ -71,7 +71,9 @@ class _LoginScreenState extends State<LoginScreen> {
                   validator: (value) {
                     if (value == null || value.isEmpty) {
                       return 'Enter your Email ID ';
-                    } else if (!value.contains('@')) {
+                    } else if (!value.contains(
+                      RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+"),
+                    )) {
                       return 'Enter valid Email Address';
                     }
                     return null;
@@ -109,7 +111,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                     ElevatedButton(
                       onPressed: () {
-                        Get.to(() =>  SignUpScreen());
+                        Get.to(() => SignUpScreen());
                       },
                       child: const Text(
                         "Sign Up",
@@ -187,7 +189,7 @@ class _LoginScreenState extends State<LoginScreen> {
   void login(String email, String password) async {
     try {
       if (await userSign(email, password)) {
-        Get.to(() => const HomeScreen());
+        Get.off(() => const HomeScreen());
         Get.snackbar(
           "Login",
           "Logging successfully",

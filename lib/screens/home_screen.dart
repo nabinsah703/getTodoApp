@@ -1,8 +1,12 @@
 import 'dart:convert';
 import 'dart:math';
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:gettodoapp/screens/login_screen.dart';
 import 'package:gettodoapp/screens/todo_view.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../model/todo.dart';
@@ -46,6 +50,14 @@ class _HomeScreenState extends State<HomeScreen> {
       appBar: AppBar(
         title: const Text("Get Todo App"),
         centerTitle: true,
+        actions: [
+          GestureDetector(
+              onTap: () {
+                signOut();
+                Get.off(() => const LoginScreen());
+              },
+              child: const Icon(Icons.logout))
+        ],
       ),
       body: ListView.builder(
           scrollDirection: Axis.vertical,
@@ -159,5 +171,15 @@ class _HomeScreenState extends State<HomeScreen> {
                     ))
               ],
             ));
+  }
+
+  Future<void> signOut() async {
+    GoogleSignIn? googleSignIn = GoogleSignIn();
+    if (googleSignIn.currentUser != null) {
+      await googleSignIn.disconnect();
+      await FirebaseAuth.instance.signOut();
+    } else {
+      await FirebaseAuth.instance.signOut();
+    }
   }
 }

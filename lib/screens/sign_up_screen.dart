@@ -141,7 +141,7 @@ class SignUpScreen extends StatelessWidget {
                   const Text('If you have Already account? '),
                   InkWell(
                     onTap: () {
-                      Get.to(() => const LoginScreen());
+                      Get.off(() => const LoginScreen());
                     },
                     child: const Text(
                       "sign in",
