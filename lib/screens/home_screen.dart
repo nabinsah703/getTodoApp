@@ -55,6 +55,9 @@ class _HomeScreenState extends State<HomeScreen> {
           GestureDetector(
               onTap: () {
                 GoogleSignInUser.signOut();
+                Get.snackbar("Sign Out", "Sign out successfully",
+                snackPosition: SnackPosition.BOTTOM);
+
                 Get.offAll(() => const LoginScreen());
               },
               child: const Icon(Icons.logout))
@@ -172,5 +175,5 @@ class _HomeScreenState extends State<HomeScreen> {
                     ))
               ],
             ));
-  } 
+  }
 }

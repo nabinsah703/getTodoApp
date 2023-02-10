@@ -54,12 +54,23 @@ class GoogleSignInUser {
   }
 
   static Future<void> signOut() async {
-    GoogleSignIn? googleSignIn = GoogleSignIn();
-    if (googleSignIn.currentUser != null) {
-      await googleSignIn.disconnect();
-      await FirebaseAuth.instance.signOut();
-    } else {
-      await FirebaseAuth.instance.signOut();
+    // GoogleSignIn? googleSignIn = GoogleSignIn();
+    // if (googleSignIn.currentUser != null) {
+    //   await googleSignIn.disconnect();
+    //   await FirebaseAuth.instance.signOut();
+    // } else {
+    //   await FirebaseAuth.instance.signOut();
+    // }
+    if (GoogleSignIn().currentUser != null) {
+      await GoogleSignIn().signOut();
     }
+
+    try {
+      await GoogleSignIn().disconnect();
+    } catch (e) {
+      print(e.toString());
+    }
+
+    // await read(firebaseAuthProvider).signOut();
   }
 }
