@@ -1,11 +1,13 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:gettodoapp/screens/login_screen.dart';
 
+import '../controller/auth_controller.dart';
+
 class SignUpScreen extends StatelessWidget {
   SignUpScreen({super.key});
 
+AuthController authController = Get.put(AuthController()); 
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   TextEditingController confirmPasswordController = TextEditingController();
@@ -16,41 +18,6 @@ class SignUpScreen extends StatelessWidget {
     emailController.dispose();
     passwordController.dispose();
     confirmPasswordController.dispose();
-  }
-
-  registration(String email, String password, String confirmPassword) async {
-    if (password == confirmPassword) {
-      try {
-        UserCredential userCredential =
-            await FirebaseAuth.instance.createUserWithEmailAndPassword(email: email, password: password);
-        Get.snackbar(
-          "success",
-          "Registered Successfully. Please Login..",
-          snackPosition: SnackPosition.BOTTOM,
-        );
-        Get.to(() => LoginScreen());
-      } on FirebaseAuthException catch (e) {
-        if (e.code == 'weak-password') {
-          Get.snackbar(
-            "weak password",
-            "Weak Password",
-            snackPosition: SnackPosition.BOTTOM,
-          );
-        } else if (e.code == 'email-already-in-use') {
-          Get.snackbar(
-            "Used Email",
-            "Account Already exists",
-            snackPosition: SnackPosition.BOTTOM,
-          );
-        }
-      }
-    } else {
-      Get.snackbar(
-        "Not Match",
-        "Password and Confirm Password doesn't match",
-        snackPosition: SnackPosition.BOTTOM,
-      );
-    }
   }
 
   @override
@@ -126,7 +93,7 @@ class SignUpScreen extends StatelessWidget {
               ElevatedButton(
                 onPressed: () {
                   if (_signUpKey.currentState!.validate()) {
-                    registration(emailController.text, passwordController.text, confirmPasswordController.text);
+                  authController.registration(emailController.text, passwordController.text, confirmPasswordController.text);
                   }
                 },
                 child: const Text(

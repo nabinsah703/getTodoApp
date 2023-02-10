@@ -1,14 +1,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:gettodoapp/controller/login_controller.dart';
+import 'package:gettodoapp/controller/auth_controller.dart';
 import 'package:gettodoapp/screens/forget_password.dart';
 import 'package:gettodoapp/screens/sign_up_screen.dart';
 
 class LoginScreen extends StatelessWidget {
   LoginScreen({super.key});
-
-  final Logincontroller logincontroller = Get.put(Logincontroller());
+  AuthController authController = Get.put(AuthController());
 
   final _formKey = GlobalKey<FormState>();
 
@@ -72,7 +71,7 @@ class LoginScreen extends StatelessWidget {
                     ElevatedButton(
                       onPressed: () {
                         if (_formKey.currentState!.validate()) {
-                          logincontroller.login(emailController.text, passwordController.text);
+                          authController.login(emailController.text, passwordController.text);
                         }
                       },
                       child: const Text(
@@ -96,7 +95,7 @@ class LoginScreen extends StatelessWidget {
                   ],
                 ),
                 ElevatedButton.icon(
-                  onPressed: logincontroller.handleGoogleSignIn,
+                  onPressed: authController.handleGoogleSignIn,
                   label: const Text("Sign In With Google Account"),
                   icon: const Icon(Icons.arrow_forward_ios_outlined),
                 )
