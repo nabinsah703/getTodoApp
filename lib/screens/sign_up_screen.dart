@@ -12,8 +12,6 @@ class SignUpScreen extends StatelessWidget {
 
   final _signUpKey = GlobalKey<FormState>();
 
-  String errorText = "";
-
   void dispose() {
     emailController.dispose();
     passwordController.dispose();
@@ -30,7 +28,7 @@ class SignUpScreen extends StatelessWidget {
           "Registered Successfully. Please Login..",
           snackPosition: SnackPosition.BOTTOM,
         );
-        Get.to(() => const LoginScreen());
+        Get.to(() => LoginScreen());
       } on FirebaseAuthException catch (e) {
         if (e.code == 'weak-password') {
           Get.snackbar(
@@ -141,7 +139,7 @@ class SignUpScreen extends StatelessWidget {
                   const Text('If you have Already account? '),
                   InkWell(
                     onTap: () {
-                      Get.offAll(() => const LoginScreen());
+                      Get.offAll(() => LoginScreen());
                     },
                     child: const Text(
                       "sign in",

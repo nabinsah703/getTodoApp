@@ -1,5 +1,3 @@
-// ignore_for_file: avoid_print, must_be_immutable
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -41,7 +39,7 @@ class ForgetPassword extends StatelessWidget {
                         Get.snackbar("send", "Password reset is send successfully",
                             snackPosition: SnackPosition.BOTTOM),
                         Get.offAll(
-                          () => const LoginScreen(),
+                          () => LoginScreen(),
                         ),
                       });
                 } on FirebaseAuthException catch (e) {

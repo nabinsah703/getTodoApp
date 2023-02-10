@@ -34,7 +34,7 @@ class _MyAppState extends State<MyApp> {
       theme: ThemeData(
         primarySwatch: Colors.purple,
       ),
-      home: user != null ? const HomeScreen() : const LoginScreen(),
+      home: user != null ? const HomeScreen() : LoginScreen(),
     );
   }
 }
