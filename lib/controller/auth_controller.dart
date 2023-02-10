@@ -3,8 +3,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
 import 'package:gettodoapp/model/google_user.dart';
 
-import '../screens/home_screen.dart';
-import '../screens/login_screen.dart';
+import '../view/home_screen.dart';
+import '../view/login_screen.dart';
 import 'google_sign_in_user.dart';
 
 class AuthController extends GetxController {

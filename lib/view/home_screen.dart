@@ -4,8 +4,8 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:gettodoapp/controller/google_sign_in_user.dart';
-import 'package:gettodoapp/screens/login_screen.dart';
-import 'package:gettodoapp/screens/todo_view.dart';
+import 'package:gettodoapp/view/login_screen.dart';
+import 'package:gettodoapp/view/todo_view.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../model/todo.dart';

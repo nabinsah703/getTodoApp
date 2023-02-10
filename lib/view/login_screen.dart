@@ -2,8 +2,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:gettodoapp/controller/auth_controller.dart';
-import 'package:gettodoapp/screens/forget_password.dart';
-import 'package:gettodoapp/screens/sign_up_screen.dart';
+import 'package:gettodoapp/view/forget_password.dart';
+import 'package:gettodoapp/view/sign_up_screen.dart';
 
 class LoginScreen extends StatelessWidget {
   LoginScreen({super.key});

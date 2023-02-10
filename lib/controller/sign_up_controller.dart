@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
 
-import '../screens/login_screen.dart';
+import '../view/login_screen.dart';
 
 class SignUpController extends GetxController {
   registration(String email, String password, String confirmPassword) async {

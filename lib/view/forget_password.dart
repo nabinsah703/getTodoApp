@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:gettodoapp/screens/login_screen.dart';
+import 'package:gettodoapp/view/login_screen.dart';
 
 class ForgetPassword extends StatelessWidget {
   ForgetPassword({super.key});

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:gettodoapp/screens/login_screen.dart';
+import 'package:gettodoapp/view/login_screen.dart';
 
 import '../controller/auth_controller.dart';
 

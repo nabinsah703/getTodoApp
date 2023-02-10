@@ -2,8 +2,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:gettodoapp/screens/home_screen.dart';
-import 'package:gettodoapp/screens/login_screen.dart';
+import 'package:gettodoapp/view/home_screen.dart';
+import 'package:gettodoapp/view/login_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
