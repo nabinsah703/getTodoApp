@@ -1,12 +1,12 @@
 class GoogleUser {
-  final String id;
+  final String? id;
   final String? displayName;
-  final String email;
+  final String? email;
 
   GoogleUser({
-    required this.id,
+    this.id,
     this.displayName,
-    required this.email,
+    this.email,
   });
 
   GoogleUser.fromJson(Map<String, dynamic> json)

@@ -1,6 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
@@ -10,7 +9,7 @@ class GoogleSignInUser {
 
   GoogleSignInAccount? currentUser;
 
-  static Future<User?> signInWithGoogle({required BuildContext context}) async {
+  static Future<User?> signInWithGoogle() async {
     if (kIsWeb) {
       GoogleAuthProvider authProvider = GoogleAuthProvider();
 
@@ -22,7 +21,7 @@ class GoogleSignInUser {
         if (kDebugMode) {
           print(e);
         }
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(e.toString())));
+        Get.snackbar("Error", e.toString());
       }
     } else {
       final GoogleSignIn googleSignIn = GoogleSignIn();

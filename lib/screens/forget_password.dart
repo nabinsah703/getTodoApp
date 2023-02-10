@@ -6,7 +6,7 @@ import 'package:get/get.dart';
 import 'package:gettodoapp/screens/login_screen.dart';
 
 class ForgetPassword extends StatelessWidget {
-   ForgetPassword({super.key});
+  ForgetPassword({super.key});
 
   TextEditingController emailController = TextEditingController();
 
@@ -38,8 +38,8 @@ class ForgetPassword extends StatelessWidget {
                 try {
                   await FirebaseAuth.instance.sendPasswordResetEmail(email: email).then((value) => {
                         print("Email sent!!"),
-                        Get.snackbar("send","Password reset is send successfully",
-                        snackPosition: SnackPosition.BOTTOM),
+                        Get.snackbar("send", "Password reset is send successfully",
+                            snackPosition: SnackPosition.BOTTOM),
                         Get.offAll(
                           () => const LoginScreen(),
                         ),

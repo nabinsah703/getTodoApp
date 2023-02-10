@@ -2,9 +2,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:gettodoapp/controller/login_controller.dart';
 import 'package:gettodoapp/model/google_user.dart';
 import 'package:gettodoapp/screens/forget_password.dart';
-import 'package:gettodoapp/screens/home_screen.dart';
 import 'package:gettodoapp/screens/sign_up_screen.dart';
 import 'package:gettodoapp/controller/google_sign_in_user.dart';
 
@@ -16,6 +16,8 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+ final Logincontroller logincontroller = Get.put(Logincontroller());
+
   final _formKey = GlobalKey<FormState>();
 
   bool isResult = false;
@@ -23,28 +25,19 @@ class _LoginScreenState extends State<LoginScreen> {
   TextEditingController passwordController = TextEditingController();
 
   String signInText = "You are not currently signed in.";
-  String errorText = "";
 
   FirebaseFirestore fbStore = FirebaseFirestore.instance;
-  GoogleUser? _googleUser;
 
   @override
   void initState() {
-    super.initState();
     GoogleSignInUser.auth.authStateChanges().listen((data) {
       if (data != null) {
         signInSignUp(data);
       } else {
-        _googleUser = null;
+        logincontroller.user = null;
       }
     });
-  }
-
-  @override
-  void dispose() {
-    emailController.dispose();
-    passwordController.dispose();
-    super.dispose();
+    super.initState();
   }
 
   @override
@@ -102,7 +95,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     ElevatedButton(
                       onPressed: () {
                         if (_formKey.currentState!.validate()) {
-                          login(emailController.text, passwordController.text);
+                          logincontroller.login(emailController.text, passwordController.text);
                         }
                       },
                       child: const Text(
@@ -126,7 +119,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   ],
                 ),
                 ElevatedButton.icon(
-                  onPressed: _handleGoogleSignIn,
+                  onPressed: logincontroller.handleGoogleSignIn,
                   label: const Text("Sign In With Google Account"),
                   icon: const Icon(Icons.arrow_forward_ios_outlined),
                 )
@@ -138,20 +131,6 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-  Future<void> _handleGoogleSignIn() async {
-    try {
-      GoogleSignInUser.signInWithGoogle(context: context);
-      Get.offAll(
-        () => _googleUser != null ? const HomeScreen() : const LoginScreen(),
-      );
-    } catch (error) {
-      Get.snackbar(
-        "Error",
-        error.toString(),
-      );
-    }
-  }
-
   void signInSignUp(User? currentUser) {
     if (currentUser != null) {
       DocumentReference userRef = fbStore.collection('users').doc(currentUser.uid);
@@ -161,11 +140,9 @@ class _LoginScreenState extends State<LoginScreen> {
 
           GoogleUser googleUserL =
               GoogleUser(id: docSnapShot.id, displayName: data?['displayName'], email: data?['email']);
+          logincontroller.user = googleUserL;
 
-          setState(() {
-            _googleUser = googleUserL;
-          });
-          userRef.set(_googleUser!.toJson(), SetOptions(merge: true));
+          userRef.set(logincontroller.user!.toJson(), SetOptions(merge: true));
         } else {
           GoogleUser googleUserL = GoogleUser(
             id: currentUser.uid,
@@ -173,10 +150,8 @@ class _LoginScreenState extends State<LoginScreen> {
             email: currentUser.email!,
           );
 
-          setState(() {
-            _googleUser = googleUserL;
-          });
-          userRef.set(_googleUser!.toJson(), SetOptions(merge: true));
+          logincontroller.user = googleUserL;
+          userRef.set(logincontroller.user!.toJson(), SetOptions(merge: true));
         }
       }, onError: (error) {
         setState(() {
@@ -186,43 +161,5 @@ class _LoginScreenState extends State<LoginScreen> {
     }
   }
 
-  void login(String email, String password) async {
-    try {
-      if (await userSign(email, password)) {
-        Get.offAll(() => const HomeScreen());
-        Get.snackbar(
-          "Login",
-          "Logging successfully",
-          snackPosition: SnackPosition.BOTTOM,
-        );
-      } else {
-        Get.snackbar(
-          "Error",
-          "Email Address or Password is wrong",
-          snackPosition: SnackPosition.BOTTOM,
-        );
-      }
-    } catch (e) {
-      print(e);
-    }
-  }
 
-  Future<bool> userSign(String email, String password) async {
-    try {
-      await FirebaseAuth.instance.signInWithEmailAndPassword(
-        email: email,
-        password: password,
-      );
-      isResult = true;
-    } on FirebaseAuthException catch (e) {
-      if (e.code == 'user-not-found') {
-        Get.snackbar(
-          "Not found",
-          "No user found for that email.",
-          snackPosition: SnackPosition.BOTTOM,
-        );
-      }
-    }
-    return isResult;
-  }
 }
